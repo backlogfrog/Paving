@@ -43,12 +43,13 @@ print(iS*2, "<inspectedElement inspectedElementID=\"", row[SAMPLENUMBER], "\"", 
 #if row[ALLIGATOR_S] > 0 or row[POTHOLE_S] > 0:
 print (iS*3, "<inspectionData>", sep="", file=f)
 
-#E = extent, S = severity, unsure how to assign which to which at this point 11.09.20
 
 
 #Set distress codes to dict, check to see if ANY codes are > 0, then write
 #iterating through isn't working...
-#unneeded at this time, but I don't have to ty[e ro[blahblah] everytime, so...
+#unneeded at this time, but I don't have to type row[blahblah] now...
+#initially attempted to run through dictionary checking if > 0 for each distress, iterating through was throwing errors for a list or dict on if > 0 - works at this time!
+
 distressCodes = {
 	'sweatherC': row[SWEATHERING_CODE],
 	'sweatherS': row[SWEATHERING_S],
@@ -107,7 +108,7 @@ def distressPrint(code, severity, quantity):
 		emptyData()
 
 
-#forced to run function individually with each var unfortunately: iterating through the dict/list was not working, int/str issues with ">"
+#forced to run function individually with each var unfortunately: iterating through the dict/list was not working, int/str issues with "> 0" check to ensure we're not printing empty distresses. 
 print (iS*5, "<PCIDistresses>", sep="", file=f)
 distressPrint(distressCodes["sweatherC"],distressCodes["sweatherS"],distressCodes["sweatherQ"])
 distressPrint(distressCodes["alligatorC"],distressCodes["alligatorS"],distressCodes["alligatorQ"])

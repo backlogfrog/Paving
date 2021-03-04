@@ -85,7 +85,7 @@ sheet = workbook.active
 
 #something is fucky here, last row shows is greater than 
 LastRow=sheet.max_row-RowIncr
-print("Total row number is ", LastRow)
+print("Total row number is ", LastRow+1)
 
 
 
@@ -165,19 +165,8 @@ def codeCheck(code):
 		emptyData()
 		ticker = 0
 
-#TESTING for specific errors in specific PID import
-#PIDREQUEST = input("Enter your PID for PID specific xml: ") 
-#print("PID: ", PIDREQUEST) 
-#for if statement below: if ticker == 1 and row[INSPECTED_PID2] == int(PIDREQUEST)
 
-
-
-
-        
-
-
-
-with alive_bar(LastRow, bar = 'bubbles', spinner = 'notes2') as bar:
+with alive_bar(LastRow-1, bar = 'bubbles', spinner = 'dots_waves') as bar:
 	for row in sheet.iter_rows(min_row=RowIncr, max_row=LastRow, values_only=True):
 			rowsRead=rowsRead+1
 			ticker = 0
@@ -209,6 +198,6 @@ f.close()
 logFile.close()
 
 #print rows and files read
-print(Fore.MAGENTA + "\nRows Read: ", int(rowsRead)-1)		
+print(Fore.MAGENTA + "\nRows Read: ", int(rowsRead))		
 print(Fore.MAGENTA + "File Opened:", db_name)
 print(Fore.MAGENTA + "Files Written:", fileName+".xml"+", "+fileName+".log")
