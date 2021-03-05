@@ -36,13 +36,12 @@ colorama.init(autoreset=True)
 #openpyxl package opens excel sheets
 from openpyxl import load_workbook
 
-#NEW DATA HAS NO DATE - NEED TO SET DATE
 
 ##################################################################################
 ##################################################################################
 ##################################################################################
-#set start positions to read data: 2012.xlsx data starts at row 4
-#RowIncr=4
+#set start positions to read data: all data starts on 2nd row - 1st row is titles
+
 RowIncr=2   
 ##################################################################################
 ##################################################################################
@@ -52,8 +51,7 @@ RowIncr=2
 
 
 
-
-#import class info from inspectionClasses.py for inspection data and from mapping.py based on column to be printed to XML
+#import class info from mapping.py for inspection data and from mapping.py based on column to be printed to XML
 
 from mapping import INSPECTED_SIZE, INSPECTED_DATE, INSPECTED_PID1, INSPECTED_PID2, DCOMMENT, P_LENGTH, P_WIDTH, SAMPLENUMBER, SWEATHERING_CODE, SWEATHERING_S, SWEATHERING_Q, ALLIGATOR_CODE, ALLIGATOR_S, ALLIGATOR_Q, BLOCKCRACK_CODE, BLOCKCRACK_S, BLOCKCRACK_Q, TRANSVERSE__CODE, TRANSVERSE_S, TRANSVERSE_Q, DEPRESSION_CODE, DEPRESSION_S, DEPRESSION_Q, POTHOLE_CODE, POTHOLE_S, POTHOLE_Q, EDGECRACKING_CODE, EDGECRACKING_S, EDGECRACKING_Q, JOINTSPALLING_CODE, JOINTSPALLING_S, JOINTSPALLING_Q, DURABILITYCRACKING_CODE, DURABILITYCRACKING_S, DURABILITYCRACKING_Q, FAULTING_CODE, FAULTING_S, FAULTING_Q, PATCHING_CODE, PATCHING_S, PATCHING_Q, BUMPSAG_CODE, BUMPSAG_S, BUMPSAG_Q, SAMPLESIZE
 
@@ -72,6 +70,7 @@ while True:
 	print(Fore.BLUE + "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░")
 	print(Fore.BLUE + "░█▀▀ ▀▄▀ █▀▀ █▀▀ █░░   ▀█▀ █▀█   █▀█ ▄▀█ █░█ █▀▀ █▀█░")
 	print(Fore.BLUE + "░██▄ █░█ █▄▄ ██▄ █▄▄   ░█░ █▄█   █▀▀ █▀█ ▀▄▀ ██▄ █▀▄░")
+	print(Fore.BLUE + "░░░Convert Data from XLSX to .XML For Paver Import░░░")
 	print(Fore.BLUE + "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n\n")
 	excel_list = [f for f in glob.glob("*.xlsx")]
 	print(Fore.BLUE + "Spreadsheets:" + Fore.RESET)
