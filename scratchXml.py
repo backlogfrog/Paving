@@ -1,17 +1,17 @@
 
-#custom XML module YATTAG wouldn't take data correctly so I said Fuck it and XML will be written from scratch
-#Distress comment for every distress listed
+#custom XML module YATTAG wouldn't take data correctly - XML will be written from scratch
+#Distress comment for every distress listed in order to differentiate imported and manually entered inspections
 DistressComment = "Imported"
 #row[INSPECTED_SIZE]-- set actual square footage - excel sheet has different size
-#inspectedSize=row[P_LENGTH]*row[P_WIDTH]
+#inspectedSize=row[P_LENGTH]*row[P_WIDTH] if necessary in the future
 inspectedSize = row[SAMPLESIZE]
-#PCI condition, doesn't import
+#PCI condition, doesn't import any adjusted number, but necessary for import
 condition=1
 
-#Spacing for xml
+#Spacing for xml - not ideal but it works at this time
 iS="  "
 
-#set pid without editing excel sheet to format NETWORK::STREET::PID#
+#set pid without editing excel sheet to format "NETWORK::STREET::PID#" while removing unneeded punctuation
 #addressID can only be 10 characters
 address=str(row[INSPECTED_PID1]).replace(" ","")
 address=address.replace(".","")
@@ -34,7 +34,7 @@ dateSet=parsed_date
 
 
 #manually write XML data to filename.xml
-#Changed comment to say Imp: for imported to identify
+#Changed comment to say imported to identify batch imported inspections
 
 print(iS, "<geospatialInspectionData inspectionDate=\"",dateSet,"\"", " units=\"English\" level=\"SAMPLE\" >", sep="", file=f)
 print(iS*2, "<inspectedElement inspectedElementID=\"", row[SAMPLENUMBER], "\"", " size=\"", inspectedSize, "\" ", "PID=\"", fullpid, "\" inspectedType=\"R\" comment=\"",DistressComment,  "\" noDistresses=\"false\">",  sep="", file=f)
@@ -48,7 +48,7 @@ print (iS*3, "<inspectionData>", sep="", file=f)
 #Set distress codes to dict, check to see if ANY codes are > 0, then write
 #iterating through isn't working...
 #unneeded at this time, but I don't have to type row[blahblah] now...
-#initially attempted to run through dictionary checking if > 0 for each distress, iterating through was throwing errors for a list or dict on if > 0 - works at this time!
+#initially attempted to run through dictionary checking if > 0 for each distress, iterating through was throwing errors for a list or dict on if > 0
 
 distressCodes = {
 	'sweatherC': row[SWEATHERING_CODE],
@@ -89,12 +89,10 @@ distressCodes = {
 	'bumpsagQ': row[BUMPSAG_Q]
 }
 
-#used for checking data as we run through
+#used for checking data as we run through rows
 distressCheck = []
 distressCheck += distressCodes.values()
 #print (distressCheck)
-
-
 
 
 
@@ -107,8 +105,9 @@ def distressPrint(code, severity, quantity):
 	except ValueError:
 		emptyData()
 
-
-#forced to run function individually with each var unfortunately: iterating through the dict/list was not working, int/str issues with "> 0" check to ensure we're not printing empty distresses. 
+#not pretty, but currently works
+#forced to run function individually with each var unfortunately: iterating through the dict/list was not working, int/str issues with "> 0" 
+#check to ensure we're not printing empty distresses. 
 print (iS*5, "<PCIDistresses>", sep="", file=f)
 distressPrint(distressCodes["sweatherC"],distressCodes["sweatherS"],distressCodes["sweatherQ"])
 distressPrint(distressCodes["alligatorC"],distressCodes["alligatorS"],distressCodes["alligatorQ"])
@@ -139,6 +138,3 @@ print (iS*4, "<levelCondition comment=\"\" source=\"\" cndMeasureUID=\"StructPCI
 print (iS*3, "</conditions>", sep="", file=f)
 print (iS*2, "</inspectedConditions>", sep="", file=f)
 print (iS, "</geospatialInspectionData>", sep="", file=f)
-
-
-#end
